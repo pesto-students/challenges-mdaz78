@@ -12,7 +12,7 @@ function Item({ item, quantity }) {
 }
 
 function isItemAlreadyAdded(item, items) {
-  items.some(({ itemName, quantity }) => item === itemName);
+  return items.some(({ itemName }) => item === itemName);
 }
 
 function getAddedItem(item, items) {
