@@ -3,10 +3,15 @@ import logo from './logo.svg';
 import './App.css';
 
 function Item({ item, quantity }) {
+  const [strike, setStrike] = useState(false);
+
+  let bought = strike ? 'bought' : '';
+  let strikeThrough = strike ? 'strike-through' : '';
+
   return (
-    <div className='card'>
-      <section className='item-name'>{item}</section>
-      <section className='item-quantity'>{quantity}</section>
+    <div className={`card ${bought}`} onClick={() => setStrike(!strike)}>
+      <section className={`item-name ${strikeThrough}`}>{item}</section>
+      <section className={`item-quantity ${strikeThrough}`}>{quantity}</section>
     </div>
   );
 }

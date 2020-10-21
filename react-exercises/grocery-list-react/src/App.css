@@ -88,3 +88,12 @@ body {
 .clear-button:hover {
   cursor: pointer;
 }
+
+.strike-through {
+  text-decoration: line-through;
+}
+
+.bought {
+  background-color: #f8f1f1;
+  color: #16697a;
+}
