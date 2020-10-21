@@ -24,6 +24,10 @@ function App() {
         <button>Add Item</button>
       </section>
 
+      <section className='clear-button-section'>
+        <button className='clear-button'>Clear List</button>
+      </section>
+
       <section className='item-list'>
         <Item />
       </section>

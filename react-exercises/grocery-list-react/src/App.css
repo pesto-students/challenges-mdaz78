@@ -45,7 +45,7 @@ body {
 }
 
 .item-list > .card {
-  margin-top: 3rem;
+  margin-top: 2rem;
   font-size: 1.5rem;
   display: grid;
   grid-template-columns: 7fr 1fr;
@@ -61,4 +61,30 @@ body {
 
 .item-list .card .item-name {
   padding: 1rem;
+}
+
+.card:hover {
+  cursor: pointer;
+}
+
+.clear-button-section {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.clear-button {
+  border: none;
+  border-radius: 5px;
+  background-color: #ffa62b;
+  border: 3px solid #ffa62b;
+  font-size: 1rem;
+  background-color: #db6400;
+  color: #f8f1f1;
+  font-weight: bold;
+  padding: 0.5rem 2rem;
+}
+
+.clear-button:hover {
+  cursor: pointer;
 }
