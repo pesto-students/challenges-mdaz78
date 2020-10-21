@@ -16,15 +16,18 @@ function isItemAlreadyAdded(item, items) {
 }
 
 function getAddedItem(item, items) {
-  items.forEach(({ item_name, quantity }, index) => {
-    if (item === item_name) {
+  for (let i = 0; i < items.length; i++) {
+    const currentItem = items[i];
+    if (item === currentItem.itemName) {
       return {
-        item,
-        quantity,
-        index,
+        itemName: currentItem.itemName,
+        quantity: currentItem.quantity,
+        index: i,
       };
     }
-  });
+  }
+
+  return null;
 }
 
 function App() {
@@ -33,30 +36,31 @@ function App() {
 
   const addItemToList = (item, items) => {
     if (isItemAlreadyAdded(item, items)) {
-      const { item: itemName, quantity, index } = getAddedItem(item, items);
-      const item_obj = {
-        item: itemName,
-        quantity: quantity + 1,
+      const addedItem = getAddedItem(item, items);
+      const quantity = addedItem.quantity + 1;
+
+      const itemObj = {
+        itemName: addedItem.itemName,
+        quantity,
       };
 
-      const updatedItems = items
-        .splice(0, index)
-        .concat(items.splice(index + 1, -1));
+      const filteredItems = items.filter(
+        ({ itemName }) => itemName !== addedItem.itemName,
+      );
 
-      setItems([...updatedItems, item_obj]);
+      setItems([itemObj, ...filteredItems]);
       setItem('');
     } else {
-      const item_obj = {
-        item,
+      const itemObj = {
+        itemName: item,
         quantity: 1,
       };
 
-      setItems([...items, item_obj]);
+      setItems([itemObj, ...items]);
       setItem('');
     }
   };
 
-  console.log(items);
   return (
     <div className='App'>
       <h1 className='heading'>Grocery List</h1>
@@ -68,6 +72,11 @@ function App() {
           id='item-name'
           value={item}
           onChange={(e) => setItem(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              addItemToList(item, items);
+            }
+          }}
         />
         <button onClick={() => addItemToList(item, items)}>Add Item</button>
       </section>
@@ -81,8 +90,8 @@ function App() {
       </section>
 
       <section className='item-list'>
-        {items.map(({ item, quantity }) => (
-          <Item item={item} quantity={quantity} key={item} />
+        {items.map(({ itemName, quantity }) => (
+          <Item item={itemName} quantity={quantity} key={itemName} />
         ))}
       </section>
     </div>
