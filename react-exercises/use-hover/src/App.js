@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+function useHover() {
+  const [isHovered, setIsHovered] = React.useState(false);
+  const [element, setElement] = React.useState(null);
+
+  const hoverRef = (domElement) => setElement(domElement);
+
+  const setMouseOver = () => setIsHovered(true);
+  const setMouseOut = () => setIsHovered(false);
+
+  React.useEffect(() => {
+    if (element) {
+      element.addEventListener('mouseover', setMouseOver);
+      element.addEventListener('mouseout', setMouseOut);
+
+      return function cleanUp() {
+        element.removeEventListener('mouseover', setMouseOver);
+        element.removeEventListener('mouseout', setMouseOut);
+      };
+    }
+  });
+
+  return [hoverRef, isHovered];
+}
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [hoverRef, isHovered] = useHover();
+  return <div ref={hoverRef}>{isHovered ? 'Hovered !' : 'Hover me !'}</div>;
 }
 
 export default App;
