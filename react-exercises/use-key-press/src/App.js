@@ -21,15 +21,19 @@ function isControlKey(key) {
 function useKeyPress(key) {
   const [isKeyPressed, setKeyPressed] = useState(false);
 
+  const handleKeyUp = ({ key: keyPressed }) => {
+    const cleanedKey = getKey(key);
+    if (cleanedKey === keyPressed.toLowerCase()) {
+      setKeyPressed(true);
+    } else {
+      setKeyPressed(false);
+    }
+  };
+
   useEffect(() => {
-    window.addEventListener('keyup', ({ key: keyPressed }) => {
-      const cleanedKey = getKey(key);
-      if (cleanedKey === keyPressed.toLowerCase()) {
-        setKeyPressed(true);
-      } else {
-        setKeyPressed(false);
-      }
-    });
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => window.removeEventListener('keyup', handleKeyUp);
   });
 
   return isKeyPressed;
